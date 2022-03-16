@@ -1,5 +1,8 @@
 import requests as r
 from bs4 import BeautifulSoup
+from dotenv import dotenv_values
+
+envs = dotenv_values('.env')
 
 def fetch():
     url = 'https://news.ycombinator.com/'
