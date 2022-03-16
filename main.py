@@ -1,14 +1,25 @@
 import requests as r
 from bs4 import BeautifulSoup
 
+def fetch():
+    url = 'https://news.ycombinator.com/'
 
-url = 'https://news.ycombinator.com/'
+    res = r.get(url)
 
-res = r.get(url)
+    soup = BeautifulSoup(res.content, 'html.parser')
 
+    data = {
+        'headline': [],
+        'link': [],
+    }
 
-soup = BeautifulSoup(res.content, 'html.parser')
+    for athing in soup.findAll(class_ = 'athing'):
+        content = athing.findAll('td')[2]
+        data['headline'].append(content.a.get_text())
+        data['link'].append(content.a['href'])
 
-for athing in soup.findAll(class_ = 'athing'):
-    data = athing.findAll('td')[2]
-    print(data.a.get_text(), data.a['href'])
+    return data
+
+def send(msg = '', to = []):
+    # send text message to email list
+    pass
